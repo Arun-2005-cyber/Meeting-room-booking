@@ -52,9 +52,12 @@ BEGIN
     SELECT 1 FROM pg_constraint WHERE conname = 'no_overlap_confirmed_bookings'
   ) THEN
     ALTER TABLE bookings
-      ADD CONSTRAINT no_overlap_confirmed_bookings EXCLUDE USING GIST (
-        room_id WITH =,
+      ADD CONSTRAINT no_overlap_confirmed_bookings
+      EXCLUDE USING GIST (
+        room_id WITH =,         -- default operator "=" (no need to specify class)
         time_range WITH &&
-      ) WHERE (status = 'confirmed');
+      )
+      WHERE (status = 'confirmed');
   END IF;
 END$$;
+
