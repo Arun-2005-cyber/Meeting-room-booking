@@ -1,4 +1,5 @@
 // src/app.js
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const roomsRouter = require('./routes/rooms');
@@ -7,7 +8,7 @@ const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 app.use(bodyParser.json());
-
+app.use(express.json());
 app.use('/rooms', roomsRouter);
 app.use('/bookings', bookingsRouter);
 app.use('/reports', bookingsRouter); // reports route lives in bookingsRouter.report route
